@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export default class Home extends Component {
+export default class Registration extends Component {
     constructor(props) {
         super(props);
         this.state ={
@@ -38,7 +38,9 @@ export default class Home extends Component {
       { withCredentials: true}
       
       ).then(response => {
-          console.log("registration res", response);
+          if (response.data.status === 'created') {
+              this.props.handleSuccessfulAuth(response.data);
+          }
       })
       .catch(error => {
           console.log("registration error", error);

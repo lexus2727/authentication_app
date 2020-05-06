@@ -11,14 +11,28 @@ export default class App extends Component {
       loggedInStatus: "NOT_LOGGED_IN",
       user: {}
     }
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  handleLogin(data) {
+    this.setState({
+      loggedInStatus: "LOGGED_IN",
+      user: data.user
+    })
   }
   render() {
     return (
       <div className='app'>
         <BrowserRouter>
         <Switch>
-          <Route exact_path={"/"} component={Home} />
-          <Route exact_path={"/dashboard"} component={Dashboard} />
+          <Route exact path={"/"} render={props => (
+            <Home { ...props} handleLogin={this.handleLogin} loggedInStatus={this.state.loggedInStatus} />
+          )}
+            
+           />
+          <Route exact path={"/dashboard"} render={props => (
+            <Dashboard { ...props} loggedInStatus={this.state.loggedInStatus} />
+          )} />
         </Switch>
         </BrowserRouter>
       </div>
